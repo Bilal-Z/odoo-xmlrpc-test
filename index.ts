@@ -136,7 +136,7 @@ function updateProductQuantity(
 		);
 	});
 
-	return new Promise((resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
 		models.methodCall(
 			'execute_kw',
 			[
@@ -145,7 +145,7 @@ function updateProductQuantity(
 				apikey,
 				'stock.change.product.qty',
 				'change_product_qty',
-				[[pushNewQty]],
+				[[await pushNewQty]],
 				{
 					context: {
 						active_id: prodId,
@@ -188,10 +188,10 @@ async function test() {
 		uid,
 		product.id,
 		product.product_tmpl_id[0],
-		11
+		15
 	);
 
-	// console.log(update);
+	console.log(update);
 }
 
 test();
