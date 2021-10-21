@@ -65,12 +65,12 @@ const models = xmlrpc.createSecureClient({
 function getProducts(
 	uid: number,
 	options: { [key: string]: any },
-	filter?: any[] | undefined
+	filter?: any[]
 ) {
 	return new Promise((resolve, reject) => {
 		models.methodCall(
 			'execute_kw',
-			[db, uid, apikey, 'product.product', 'search_read', [[filter]], options],
+			[db, uid, apikey, 'product.product', 'search_read', [filter], options],
 			function (error, value) {
 				if (value) {
 					return resolve(value);
@@ -85,12 +85,12 @@ function getProducts(
 function getSingleProduct(
 	uid: number,
 	options: { [key: string]: any },
-	filter?: any[] | undefined
+	filter: any[]
 ): Promise<{ [key: string]: any }> {
 	return new Promise((resolve, reject) => {
 		models.methodCall(
 			'execute_kw',
-			[db, uid, apikey, 'product.product', 'search_read', [[filter]], options],
+			[db, uid, apikey, 'product.product', 'search_read', [filter], options],
 			function (error, value) {
 				if (value) {
 					return resolve(value[0]);
@@ -171,24 +171,26 @@ function updateProductQuantity(
 }
 
 async function test() {
+	const ver = await getServerVersion();
 	const uid = await authenticate();
 
-	// console.log(ver);
-	// console.log(uid);
+	console.log(ver);
+	console.log(uid);
+	console.log(await getProducts(uid, { limit: 5, fields: ['name'] }));
 
 	const product = await getSingleProduct(
 		uid,
 		{ fields: ['name', 'qty_available', 'product_tmpl_id'] },
-		['name', '=', 'Test product']
+		[['name', '=', 'Test product']]
 	);
 
-	// console.log(product);
+	console.log(product);
 
 	const update = await updateProductQuantity(
 		uid,
 		product.id,
 		product.product_tmpl_id[0],
-		15
+		25
 	);
 
 	console.log(update);
