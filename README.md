@@ -1,3 +1,21 @@
+# About this repo
+
+this repo serves as a test for interacting with odoo's API from a NodeJS environment using the xmlrpc package.
+
+It Implements:
+
+- querying for database version
+- authentication
+- searching for products
+- updating quantity at hand of a product
+
+to run need to set env variables
+
+- **HOST:** url of odoo instance. ex: demo.odoo.com.
+- **DB:** name of DB instance. ex: demo.
+- **USERNAME:** account username/email.
+- **API_KEY:** API key generated from instance. alternatively can use password.
+
 # Using ODOO External API
 
 ## Odoo uses an XML-RPC API
